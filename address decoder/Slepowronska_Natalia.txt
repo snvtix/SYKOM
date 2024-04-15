@@ -1,0 +1,20 @@
+Zadanie na Laboratorium 2 z przedmiotu Systemy Komputerowe
+Student: Slepowronska_Natalia
+==========================================================
+
+Smartwatch wyposa¿ony jest w wiele czujników œrodowiskowych (np. czujnik têtna, ¿yroskop, czujnik oœwietlenia itp.) i komunikacyjnych (np. WiFi, Bluetooth, wyœwietlacz), których obs³uga realizowana jest przez dedykowane modu³y peryferyjne wbudowane w strukturê krzemow¹ procesora. Uk³ady te do³¹czone s¹ do magistrali systemowej, która charakteryzuje siê 16-bitow¹ podprzestrzeni¹ adresow¹, oraz odrêbnymi 32-bitowymi magistralami danych – wejœciow¹ i wyjœciow¹. Niezak³ócon¹ wspó³pracê wszystkich uk³adów peryferyjnych zapewniaj¹ odpowiednio skonfigurowane dekodery adresów, które umieszczaj¹ poszczególne peryferia w przestrzeni adresowej w sposób wykluczaj¹cy kolizje (tzn. pod jednym adresem mo¿e znajdowaæ siê tylko jedno peryferium). Wœród nich znajduje siê modu³ prostego 2-osiowego akcelerometru, który za pomoc¹ kodu 4-bitowego sygnalizuje zmierzone wartoœci przeci¹¿eñ (osobno dla ka¿dej osi). Ponadto, dla ka¿dej osi mo¿na niezale¿nie ustawiæ czu³oœæ w zakresie 0...15. Twoim zadaniem jest zaprojektowanie Dekodera Adresów, który umieœci dwa 4-bitowe porty czujnika w przestrzeni adresowej procesora zgodnie z podan¹ specyfikacj¹:  
+- Adresy: 0x1094 (oœ 1), 0x1098 (oœ 2) 
+- Przesuniêcie bitowe dla osi 1: 5 
+- Przesuniêcie bitowe dla osi 2: 7 
+- Obs³uga osi 1 do³¹czona jest do 4 najm³odszych bitów 16-bitowego portu GPIO, natomiast oœ 2 do³¹czona jest do 4 najstarszych bitów.
+
+Dodatkowym uk³adem w projektowanym urz¹dzeniu jest wbudowany licznik o parametrach: 
+- Licznik 8-bitowy, zliczaj¹cy w przód od wartoœci pocz¹tkowej 134 
+- Po osi¹gniêciu wartoœci maksymalnej nastêpuje zmiana bitu statusu dostêpnego pod adresem 0x109c z przesuniêciem 3 bitów. Za³o¿yæ, ¿e po resecie wartoœæ bitu statusu jest równa zero. 
+- Zatrzymanie zliczania przez zapis logicznego zera pod adres 0x109c z przesuniêciem 6. Rozpoczêcie zliczania od wartoœci pocz¹tkowej przez zapis logicznej jedynki pod adres 0x109c z przesuniêciem 8
+
+Odczyt i zapis dla czujników oraz zegara odbywa siê przez ten sam adres. 
+
+Musisz zadbaæ o to, aby Twój modu³ reagowa³ w poprawny sposób przy próbie odczytu/zapisu z/pod adresów wskazanych w specyfikacji. Nie mniej wa¿ne jest, aby Twój uk³ad peryferyjny nie przeszkadza³ w komunikacji z innymi modu³ami pod³¹czonymi do magistrali. Oznacza to, ¿e w przypadku, gdy na magistrali pojawiaj¹ siê odczyty lub zapisy pod inne adresy ni¿ wynikaj¹ce ze specyfikacji, Twój modu³ nie mo¿e na nie reagowaæ, tzn. nie mo¿e zmieniaæ wyjœæ (przy próbach zapisu) oraz musi zapewniæ stan neutralny dla dzia³ania magistrali, tj. dostêp innych peryferiów (przy próbach odczytu).
+
+Przygotuj raport, który udowodni poprawnoœæ zrealizowanego zadania. W raporcie zamieœæ kod Ÿród³owy modu³u, kod testbencha oraz wykresy wraz z komentarzem, wskazuj¹cym konkretne miejsca wykresu, z których wynikaæ bêd¹ wnioski odnoœnie poprawnej pracy uk³adu.
